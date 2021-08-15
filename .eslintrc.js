@@ -20,11 +20,6 @@ module.exports = {
     "import/no-unresolved": "off",
     "import/extensions": ["warn", "never"],
     "import/prefer-default-export": "off",
-    "@typescript-eslint/no-namespace": "off",
-    "no-restricted-globals": "off",
-    "no-use-before-define": "off",
-    "import/no-extraneous-dependencies": "off",
-    "no-alert": "off",
-    "class-methods-use-this": "off",
+    'no-console': 'off'
   },
 };

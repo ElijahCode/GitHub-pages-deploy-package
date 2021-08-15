@@ -4,7 +4,6 @@ import { getTree } from "../getTree/getTree";
 export async function createCommit(gitData: IGitData): Promise<void> {
   try {
     const octokit = new Octokit({ auth: gitData.token });
-
     const branchesData = await octokit.request(
       `GET /repos/${gitData.userName}/${gitData.repoName}/branches`
     );
@@ -38,16 +37,16 @@ export async function createCommit(gitData: IGitData): Promise<void> {
 
     const tree = await getTree(gitData.dir);
 
-    const data3 = await octokit.request(
+    const sendTree = await octokit.request(
       `POST /repos/${gitData.userName}/${gitData.repoName}/git/trees`,
       {
         base_tree: shaBaseTree,
         tree,
       }
     );
-    const shaNewTree = data3.data.sha;
+    const shaNewTree = sendTree.data.sha;
 
-    const data4 = await octokit.request(
+    const sendCommits = await octokit.request(
       `POST /repos/${gitData.userName}/${gitData.repoName}/git/commits`,
       {
         parents: [shaLatestCommit],
@@ -55,7 +54,7 @@ export async function createCommit(gitData: IGitData): Promise<void> {
         message: "",
       }
     );
-    const shaNewCommit = data4.data.sha;
+    const shaNewCommit = sendCommits.data.sha;
 
     await octokit.request(
       `POST /repos/${gitData.userName}/${gitData.repoName}/git/refs/heads/${gitData.branchName}`,
@@ -64,6 +63,14 @@ export async function createCommit(gitData: IGitData): Promise<void> {
       }
     );
   } catch (err) {
-    console.log(err);
+    const errMessage = err.response.data.message;
+    const errCode = err.status;
+    switch(errMessage) {
+      case 'Bad credentials':
+        console.error("Can't authorizating. Check you user name, token and repository name. Error code:", errCode)
+        break;
+      default: 
+      console.error(`${errMessage}. Error code:`, errCode)
+    } 
   }
 }

@@ -1,4 +1,5 @@
 interface IGitData {
+  [key: string]: string;
   token: string;
   userName: string;
   repoName: string;

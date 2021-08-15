@@ -1,0 +1,12 @@
+node_modules
+dist
+src
+.eslintignore
+.eslintrc.js
+.prettierignore
+tsconfig.json
+jest.config.js
+babel.config.js
+.github
+.gitignore
+coverage

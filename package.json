@@ -1,8 +1,8 @@
 {
-  "name": "homework20",
-  "version": "1.0.0",
+  "name": "@elijahcode/ghpagesdeployer",
+  "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "build/app.js",
   "scripts": {
     "test": "jest",
     "lint": "prettier --check . && npx eslint . --ext .js,.ts,.tsx && npx tsc --esModuleInterop true --noEmit src/**/*.ts",
@@ -23,6 +23,7 @@
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-typescript": "^7.15.0",
+    "@types/inquirer": "^7.3.3",
     "@types/jest": "^27.0.0",
     "@types/node": "^16.6.0",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
