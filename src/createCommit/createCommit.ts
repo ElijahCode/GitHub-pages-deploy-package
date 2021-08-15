@@ -65,12 +65,15 @@ export async function createCommit(gitData: IGitData): Promise<void> {
   } catch (err) {
     const errMessage = err.response.data.message;
     const errCode = err.status;
-    switch(errMessage) {
-      case 'Bad credentials':
-        console.error("Can't authorizating. Check you user name, token and repository name. Error code:", errCode)
+    switch (errMessage) {
+      case "Bad credentials":
+        console.error(
+          "Can't authorizating. Check you user name, token and repository name. Error code:",
+          errCode
+        );
         break;
-      default: 
-      console.error(`${errMessage}. Error code:`, errCode)
-    } 
+      default:
+        console.error(`${errMessage}. Error code:`, errCode);
+    }
   }
 }

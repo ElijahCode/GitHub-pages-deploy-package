@@ -3,7 +3,7 @@ import fs from "fs";
 import execa from "execa";
 import { createConfigFile } from "./createConfigureFile/createConfigureFile";
 import { getRepositoryData } from "./getRepositoryData/getRepositoryData";
-import { createCommitFromCustomDeploy } from './customDeployCreateCommit/customDeployCreateCommit'
+import { createCommitFromCustomDeploy } from "./customDeployCreateCommit/customDeployCreateCommit";
 import { createCommit } from "./createCommit/createCommit";
 
 (async function app(): Promise<void> {
@@ -38,9 +38,11 @@ import { createCommit } from "./createCommit/createCommit";
   if (options.build) {
     console.log("Start build...");
     try {
-        await execa('npm', ['run', 'build'])
+      await execa("npm", ["run", "build"]);
     } catch {
-        console.log('Build error. Probably you do not have scripts "npm run build" or on building error ocurred.')
+      console.log(
+        'Build error. Probably you do not have script "npm run build" or on building error ocurred.'
+      );
     }
   }
 
@@ -51,19 +53,22 @@ import { createCommit } from "./createCommit/createCommit";
     config = null;
   }
 
-  if(!options.customDeploy) {
-      if(config) {
-          try {
-            console.log('Start deploying...')
-            await createCommit(config);
-          } catch(err) {
-              console.log(err)
-          }
-        
-      } else {
-        console.log('Cannot find config file\n')
-        console.log('Run ghPagesDeployer -i for create it or\n')
-        console.log('Run ghPagesDeployer -c for deploy with data transfer via terminal\n')
+  if (options.customDeploy || !options.init) {
+    if (config) {
+      try {
+        console.log("Start deploying...");
+        await createCommit(config);
+      } catch (err) {
+        console.log(err);
       }
+    } else {
+      console.log("Cannot find config file\n");
+      console.log(
+        "Run node node_modules/@elijahcode/ghpagesdeployer/build/app.js -i for create it or\n"
+      );
+      console.log(
+        "Run node node_modules/@elijahcode/ghpagesdeployer/build/app.js -c for deploy with data transfer via terminal\n"
+      );
+    }
   }
-})()
+})();

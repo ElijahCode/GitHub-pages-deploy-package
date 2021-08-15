@@ -1,6 +1,6 @@
 {
   "name": "@elijahcode/ghpagesdeployer",
-  "version": "0.0.1",
+  "version": "1.0.8",
   "description": "",
   "main": "build/app.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/ElijahCode/GitHub-pages-deploy-package.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ilya Starikov",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ElijahCode/GitHub-pages-deploy-package/issues"

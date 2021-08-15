@@ -28,7 +28,8 @@ export function createConfigFile(userName?: string, repoName?: string): void {
     {
       type: "password",
       name: "token",
-      message: "Input your github token",
+      message:
+        "Input your github token. It's will safe because config file automatically will be written in .gitignore",
       mask: "*",
     },
     {
@@ -52,9 +53,9 @@ export function createConfigFile(userName?: string, repoName?: string): void {
   inquirer.prompt(questions).then((answers) => {
     fs.writeFileSync("ghPagesDeployer.config.json", JSON.stringify(answers));
     try {
-        fs.appendFileSync('.gitignore', '\nghPagesDeployer.config.json');
+      fs.appendFileSync(".gitignore", "\nghPagesDeployer.config.json");
     } catch {
-        fs.writeFileSync('.gitignore', 'ghPagesDeployer.config.json');
+      fs.writeFileSync(".gitignore", "ghPagesDeployer.config.json");
     }
   });
 }

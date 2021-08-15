@@ -1,8 +1,11 @@
 import fs from "fs";
 import * as inquirer from "inquirer";
-import { createCommit } from '../createCommit/createCommit'
+import { createCommit } from "../createCommit/createCommit";
 
-export async function createCommitFromCustomDeploy(userName?: string, repoName?: string): Promise<void> {
+export async function createCommitFromCustomDeploy(
+  userName?: string,
+  repoName?: string
+): Promise<void> {
   const questions = [
     {
       type: "input",
@@ -51,6 +54,6 @@ export async function createCommitFromCustomDeploy(userName?: string, repoName?:
   ];
 
   inquirer.prompt(questions).then((answers) => {
-    createCommit(answers)
+    createCommit(answers);
   });
 }
