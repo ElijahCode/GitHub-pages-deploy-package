@@ -3,3 +3,4 @@ dist
 coverage
 webpack.config.js
 src/stories
+build

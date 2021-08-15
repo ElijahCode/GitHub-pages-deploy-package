@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lint": "prettier --check . && npx eslint . --ext .js,.ts,.tsx && npx tsc --esModuleInterop true --noEmit src/ts/**/*.ts",
+    "lint": "prettier --check . && npx eslint . --ext .js,.ts,.tsx && npx tsc --esModuleInterop true --noEmit src/**/*.ts",
     "lint:fix": "prettier --write . && eslint . --ext .js,.ts,.tsx --fix"
   },
   "repository": {
@@ -37,7 +37,9 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@octokit/rest": "^18.9.0",
     "commander": "^8.1.0",
+    "execa": "^5.1.1",
     "inquirer": "^8.1.2"
   }
 }
