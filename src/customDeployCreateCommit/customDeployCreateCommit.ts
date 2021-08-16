@@ -40,7 +40,7 @@ export async function createCommitFromCustomDeploy(
       name: "dir",
       message: "Input directory. from that files will pushed",
       default() {
-        return "/dist";
+        return "./dist";
       },
     },
     {
@@ -53,7 +53,8 @@ export async function createCommitFromCustomDeploy(
     },
   ];
 
-  inquirer.prompt(questions).then((answers) => {
-    createCommit(answers);
+  await inquirer.prompt(questions).then(async (answers) => {
+    console.log("Start deploying...");
+    await createCommit(answers);
   });
 }

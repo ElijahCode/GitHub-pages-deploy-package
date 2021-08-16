@@ -1,10 +1,11 @@
+#!/usr/bin/env node
 import { Command } from "commander";
 import fs from "fs";
-import execa from "execa";
 import { createConfigFile } from "./createConfigureFile/createConfigureFile";
 import { getRepositoryData } from "./getRepositoryData/getRepositoryData";
 import { createCommitFromCustomDeploy } from "./customDeployCreateCommit/customDeployCreateCommit";
 import { createCommit } from "./createCommit/createCommit";
+import { runBuild } from "./runBuild/runBuild";
 
 (async function app(): Promise<void> {
   const programm = new Command();
@@ -17,7 +18,8 @@ import { createCommit } from "./createCommit/createCommit";
       "-c, --custom-deploy",
       "deploy on github pages with selfinput parameters"
     )
-    .option("-b, --build", "build project");
+    .option("-b, --build", "build project")
+    .option("-d, --deploy", "deploy page");
 
   programm.parse(process.argv);
 
@@ -26,23 +28,26 @@ import { createCommit } from "./createCommit/createCommit";
   if (options.init) {
     if (repositoryData) {
       const [userName, repoName] = repositoryData;
-      createConfigFile(userName, repoName);
+      await createConfigFile(userName, repoName);
     } else {
-      createConfigFile();
+      await createConfigFile();
     }
   }
-  if (options.customDeploy) {
-    console.log("Start custom deploy...");
-    await createCommitFromCustomDeploy();
-  }
   if (options.build) {
-    console.log("Start build...");
     try {
-      await execa("npm", ["run", "build"]);
+      await runBuild();
     } catch {
       console.log(
         'Build error. Probably you do not have script "npm run build" or on building error ocurred.'
       );
+    }
+  }
+  if (options.customDeploy) {
+    if (repositoryData) {
+      const [userName, repoName] = repositoryData;
+      await createCommitFromCustomDeploy(userName, repoName);
+    } else {
+      await createCommitFromCustomDeploy();
     }
   }
 
@@ -53,7 +58,7 @@ import { createCommit } from "./createCommit/createCommit";
     config = null;
   }
 
-  if (options.customDeploy || !options.init) {
+  if (options.deploy) {
     if (config) {
       try {
         console.log("Start deploying...");
@@ -63,11 +68,9 @@ import { createCommit } from "./createCommit/createCommit";
       }
     } else {
       console.log("Cannot find config file\n");
+      console.log("Run ghdeploy -i for create it or\n");
       console.log(
-        "Run node node_modules/@elijahcode/ghpagesdeployer/build/app.js -i for create it or\n"
-      );
-      console.log(
-        "Run node node_modules/@elijahcode/ghpagesdeployer/build/app.js -c for deploy with data transfer via terminal\n"
+        "Run ghdeploy -c for deploy with data transfer via terminal\n"
       );
     }
   }

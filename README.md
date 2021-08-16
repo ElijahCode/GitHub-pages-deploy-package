@@ -15,35 +15,32 @@ process of installation you can see on this gif:
 
 For usage this package you need run next comman in your terminal:
 
->                        "node node_modules/@elijahcode/ghpagesdeployer/build/app.js -i"
+>                                                                  ghdeployer -i
 
 Instead of -i you can use --init
 
-It create configuration file. Now you can deploy your page. Run:
+In case if you use webpack and whant build the project, use flag -b or --build:
 
->                        "node node_modules/@elijahcode/ghpagesdeployer/build/app.js"
-
-If you dont want create configure file, run this command:
-
->                        "node node_modules/@elijahcode/ghpagesdeployer/build/app.js -c"
-
-Instead of -c you can use --custom:deploy
-
-IN case if you use webpack and whant build the project, use flag -b or --build. After building, page automatically will be deployed.
-
->                        "node node_modules/@elijahcode/ghpagesdeployer/build/app.js -b"
+>                                                                  ghdeployer -b
 
 **_Warning_ : for use this command you must have "build" script in your .json file. If you haven`t it, process execute with error**
 
-For usage recommended create this scripts in your .json file:
+If you dont want create configure file use flag -c:
 
-```json
-"deploy": "node node_modules/@elijahcode/ghpagesdeployer/build/app.js",
-"deploy:init": "node node_modules/@elijahcode/ghpagesdeployer/build/app.js -i",
-"deploy:build": "node node_modules/@elijahcode/ghpagesdeployer/build/app.js -b",
-"deploy:custom": "node node_modules/@elijahcode/ghpagesdeployer/build/app.js -c"
-```
+>                                                                  ghdeployer -c
+
+Instead of -c you can use --custom-deploy. After run you shoud input asked data. After it page will authomatically deployed.
+
+For deploing page with use config file use flag -d or --deploy:
+
+>                                                                  ghdeployer -d
+
+Also you can use few flags in one command, for example:
+
+>                                                                  ghdeployer -i -b -d
+
+This command will create config file, build the page and deploy it.
 
 Example of using:
 
-[![asciicast](https://asciinema.org/a/m4Yf0bo2cwhKikV4Wq8jaaQC1.svg)](https://asciinema.org/a/m4Yf0bo2cwhKikV4Wq8jaaQC1)
+[![asciicast](https://asciinema.org/a/430732.svg)](https://asciinema.org/a/430732)

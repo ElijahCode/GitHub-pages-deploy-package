@@ -1,7 +1,10 @@
 import fs from "fs";
 import * as inquirer from "inquirer";
 
-export function createConfigFile(userName?: string, repoName?: string): void {
+export async function createConfigFile(
+  userName?: string,
+  repoName?: string
+): Promise<void> {
   const questions = [
     {
       type: "input",
@@ -50,10 +53,13 @@ export function createConfigFile(userName?: string, repoName?: string): void {
     },
   ];
 
-  inquirer.prompt(questions).then((answers) => {
+  await inquirer.prompt(questions).then((answers) => {
     fs.writeFileSync("ghPagesDeployer.config.json", JSON.stringify(answers));
     try {
-      fs.appendFileSync(".gitignore", "\nghPagesDeployer.config.json");
+      const gitignoreContent = fs.readFileSync(".gitignore", "utf8");
+      if (!gitignoreContent.match("ghPagesDeployer.config.json")) {
+        fs.appendFileSync(".gitignore", "\nghPagesDeployer.config.json");
+      }
     } catch {
       fs.writeFileSync(".gitignore", "ghPagesDeployer.config.json");
     }

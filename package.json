@@ -3,6 +3,9 @@
   "version": "1.0.8",
   "description": "",
   "main": "build/app.js",
+  "bin": {
+    "ghdeploy": "build/app.js"
+  },
   "scripts": {
     "test": "jest",
     "lint": "prettier --check . && npx eslint . --ext .js,.ts,.tsx && npx tsc --esModuleInterop true --noEmit src/**/*.ts",

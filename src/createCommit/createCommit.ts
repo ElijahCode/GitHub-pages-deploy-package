@@ -2,6 +2,7 @@ import { Octokit } from "@octokit/rest";
 import { getTree } from "../getTree/getTree";
 
 export async function createCommit(gitData: IGitData): Promise<void> {
+  let isExecuteWithError = false;
   try {
     const octokit = new Octokit({ auth: gitData.token });
     const branchesData = await octokit.request(
@@ -63,6 +64,7 @@ export async function createCommit(gitData: IGitData): Promise<void> {
       }
     );
   } catch (err) {
+    isExecuteWithError = true;
     const errMessage = err.response.data.message;
     const errCode = err.status;
     switch (errMessage) {
@@ -73,7 +75,13 @@ export async function createCommit(gitData: IGitData): Promise<void> {
         );
         break;
       default:
-        console.error(`${errMessage}. Error code:`, errCode);
+        console.error(
+          `Deploy is failed. Error message: ${errMessage}. Error code:`,
+          errCode
+        );
     }
+  }
+  if (!isExecuteWithError) {
+    console.log("Page was succesfull deployed on github pages!");
   }
 }
