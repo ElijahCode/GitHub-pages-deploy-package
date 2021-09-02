@@ -35,7 +35,11 @@ import { runBuild } from "./runBuild/runBuild";
   }
   if (options.build) {
     try {
-      await runBuild();
+      const result = await runBuild();
+      if (!result) {
+        console.log("Build failed. Deploy terminated");
+        process.exit(1);
+      }
     } catch {
       console.log(
         'Build error. Probably you do not have script "npm run build" or on building error ocurred.'
